@@ -38,7 +38,7 @@ h3 { font-size: 16px; line-height: 24px; font-weight: 500; }
 .section-note { color: var(--text-secondary); font-size: 12px; }
 .table-frame { overflow-x: auto; border-top: 1px solid var(--border-strong); }
 .campaign-table { width: 100%; min-width: 780px; border-collapse: collapse; text-align: left; }
-.campaign-table th, .campaign-table td { border-bottom: 1px solid var(--border-default); padding: 12px 14px; vertical-align: middle; }
+.campaign-table th, .campaign-table td { border-bottom: 1px solid var(--border-default); padding: 9px 14px; vertical-align: middle; }
 .campaign-table thead th { background: var(--surface-muted); color: var(--text-secondary); font-size: 12px; font-weight: 500; letter-spacing: .02em; }
 .campaign-table tbody tr { cursor: pointer; transition: background-color 120ms ease; }
 .campaign-table tbody tr:hover { background: var(--color-primary-05); }
@@ -84,4 +84,52 @@ h3 { font-size: 16px; line-height: 24px; font-weight: 500; }
 .empty-state h2 { margin-top: 5px; }
 .empty-state p:last-child { margin-top: 8px; color: var(--text-secondary); }
 .sr-only { position: absolute; width: 1px; height: 1px; padding: 0; margin: -1px; overflow: hidden; clip: rect(0, 0, 0, 0); white-space: nowrap; border: 0; }
+
+/* Detail surfaces */
+.detail-header-actions { display: flex; align-items: center; gap: 6px; }
+.overview-content, .content-tree, .assets-section { margin-top: 22px; }
+.attention-items { border-top: 1px solid var(--border-default); }
+.attention-row { display: flex; justify-content: space-between; gap: 20px; padding: 15px 0; border-bottom: 1px solid var(--border-default); }
+.attention-title, .asset-filename, .content-node-name { color: var(--text-primary); font-weight: 500; }
+.attention-subtitle, .attention-reason, .asset-linked-from, .review-subtext { color: var(--text-secondary); font-size: 12px; }
+.attention-reason { margin-top: 3px; }
+.attention-actions, .asset-actions { display: flex; align-items: center; flex-wrap: wrap; justify-content: flex-end; gap: 10px; }
+.secondary-action-btn, .provenance-back { border: 0; background: transparent; color: var(--action-primary); cursor: pointer; font-size: 12px; padding: 0; }
+.secondary-action-btn:hover, .provenance-back:hover { text-decoration: underline; }
+.action-label { color: var(--text-secondary); font-size: 12px; }
+.review-readiness, .signed-off-info { border-left: 3px solid var(--color-primary-100); background: var(--color-primary-05); padding: 14px 16px; }
+.review-message, .signed-off-message { color: var(--text-primary); }
+.review-subtext { margin-top: 5px; }
+.content-tree { border-top: 1px solid var(--border-default); }
+.content-tree-node { border-bottom: 1px solid var(--border-default); }
+.content-node-row, .asset-ref-row, .asset-row { display: flex; align-items: center; gap: 10px; min-height: 44px; }
+.content-node-row { padding: 8px 0; }
+.expand-toggle, .expand-toggle-spacer { display: grid; place-items: center; width: 22px; height: 22px; flex: 0 0 22px; }
+.expand-toggle { border: 0; background: transparent; color: var(--text-secondary); cursor: pointer; }
+.content-node-info { display: flex; align-items: center; flex: 1; flex-wrap: wrap; gap: 8px; min-width: 0; }
+.content-node-name { min-width: 180px; }
+.content-type-badge, .workflow-status, .assignee, .delivery-key { color: var(--text-secondary); font-size: 12px; }
+.workflow-status { padding: 1px 6px; border-radius: 3px; }
+.workflow-ready { background: var(--color-success-05); color: var(--color-success-100); }
+.workflow-review { background: var(--color-warning-05); color: var(--color-warning-100); }
+.workflow-changes { background: var(--color-danger-05); color: var(--color-danger-100); }
+.delivery-key { font-family: var(--font-mono); }
+.content-tree-children { margin-left: 22px; border-left: 1px solid var(--border-default); padding-left: 12px; }
+.asset-ref-row { min-height: 34px; color: var(--text-secondary); font-size: 12px; }
+.asset-ref-icon { color: var(--color-primary-100); font-size: 8px; }
+.asset-ref-row .system-link { margin-left: auto; }
+.asset-group + .asset-group { margin-top: 28px; }
+.asset-group-title { margin: 0; padding: 0 0 8px; border-bottom: 1px solid var(--border-strong); font-size: 12px; color: var(--text-secondary); text-transform: uppercase; letter-spacing: .05em; font-weight: 500; }
+.asset-row { justify-content: space-between; padding: 10px 0; border-bottom: 1px solid var(--border-default); }
+.asset-info { display: flex; align-items: center; flex-wrap: wrap; gap: 10px; min-width: 0; }
+.asset-status-warning, .asset-status-unlinked { color: var(--status-attention-fg); font-size: 12px; }
+.asset-status-ok { color: var(--status-signed-off-fg); font-size: 12px; }
+.provenance-panel { border-top: 1px solid var(--border-default); padding-top: 14px; }
+.provenance-content { max-width: 620px; margin-top: 22px; }
+.provenance-title { margin: 0 0 16px; font-size: 16px; font-weight: 500; }
+.provenance-item { display: grid; grid-template-columns: 130px 1fr; gap: 12px; padding: 10px 0; border-bottom: 1px solid var(--border-default); font-size: 13px; }
+.provenance-label { color: var(--text-secondary); }
+.provenance-value { color: var(--text-primary); }
+.provenance-links { display: flex; flex-wrap: wrap; gap: 10px; }
+@media (max-width: 760px) { .attention-row, .asset-row { align-items: flex-start; flex-direction: column; gap: 10px; } .attention-actions, .asset-actions { justify-content: flex-start; } .content-node-row { align-items: flex-start; } .content-node-row > .system-link { margin-left: 32px; } .provenance-item { grid-template-columns: 1fr; gap: 3px; } }
 @media (max-width: 760px) { .app-header { align-items: flex-start; flex-direction: column; gap: 14px; padding: 16px 20px; } .demo-controls { padding-left: 0; border-left: 0; } .primary-nav { padding: 0 20px; } .page-content { padding: 22px 20px 40px; } .split-view { grid-template-columns: 1fr; } .campaign-rail { border-right: 0; border-bottom: 1px solid var(--border-strong); } .rail-list { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); } .detail-header, .detail-body { padding-left: 18px; padding-right: 18px; } .detail-tabs { padding-left: 18px; padding-right: 18px; } }
