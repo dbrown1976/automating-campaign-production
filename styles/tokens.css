@@ -1,0 +1,115 @@
+:root {
+  /* Typography */
+  --font-sans: "IBM Plex Sans", Arial, sans-serif;
+  --font-mono: "IBM Plex Mono", monospace;
+
+  --font-size-h1: 28px;
+  --line-height-h1: 40px;
+  --font-size-h2: 22px;
+  --line-height-h2: 38px;
+  --font-size-h3: 16px;
+  --line-height-h3: 28px;
+  --font-size-title: 16px;
+  --line-height-title: 28px;
+  --font-size-body: 14px;
+  --line-height-body: 24px;
+  --font-size-caption: 12px;
+  --line-height-caption: 14px;
+
+  --font-weight-regular: 400;
+  --font-weight-medium: 500;
+  --font-weight-bold: 700;
+
+  /* Spacing */
+  --space-01: 2px;
+  --space-02: 4px;
+  --space-03: 8px;
+  --space-04: 12px;
+  --space-05: 20px;
+  --space-06: 24px;
+  --space-07: 30px;
+  --space-08: 40px;
+  --space-09: 50px;
+  --space-10: 80px;
+
+  /* Radius */
+  --radius-none: 0;
+  --radius-xs: 4px;
+  --radius-sm: 8px;
+  --radius-md: 12px;
+  --radius-lg: 16px;
+  --radius-xl: 100px;
+
+  /* Ocean / neutrals */
+  --color-white: #ffffff;
+  --color-ocean-100: #002c42;
+  --color-ocean-80: #335668;
+  --color-ocean-65: #597684;
+  --color-ocean-30: #b2c0c6;
+  --color-ocean-15: #d9dfe3;
+  --color-ocean-05: #f2f4f6;
+  --color-ocean-03: #f7f9f9;
+  --color-onyx-100: #0a1e29;
+
+  /* Primary */
+  --color-primary-100: #0374dd;
+  --color-primary-80: #3590e4;
+  --color-primary-65: #5ba5e9;
+  --color-primary-50: #81baee;
+  --color-primary-10: #e6f1fc;
+  --color-primary-05: #f2f8fd;
+
+  /* Danger */
+  --color-danger-100: #e22840;
+  --color-danger-10: #fce9ec;
+  --color-danger-05: #fef4f5;
+
+  /* Warning */
+  --color-warning-100: #ec7520;
+  --color-warning-10: #fdf1e9;
+  --color-warning-05: #fef8f4;
+
+  /* Success */
+  --color-success-100: #5ab513;
+  --color-success-10: #eef8e7;
+  --color-success-05: #f7fbf3;
+
+  /* Information */
+  --color-info-100: #216083;
+  --color-info-05: #f4f7f9;
+
+  /* Azure */
+  --color-azure-100: #b4c5f2;
+  --color-azure-50: #d6dff8;
+  --color-azure-25: #ecf1fc;
+  --color-azure-10: #f8f9fe;
+
+  /* Semantic aliases */
+  --text-primary: var(--color-ocean-100);
+  --text-secondary: var(--color-ocean-65);
+  --text-disabled: var(--color-ocean-30);
+
+  --surface-default: var(--color-white);
+  --surface-subtle: var(--color-ocean-03);
+  --surface-muted: var(--color-ocean-05);
+
+  --border-default: var(--color-ocean-15);
+  --border-strong: var(--color-ocean-30);
+
+  --action-primary: var(--color-primary-100);
+  --action-primary-hover: var(--color-primary-80);
+
+  --status-attention-fg: var(--color-danger-100);
+  --status-attention-bg: var(--color-danger-05);
+  --status-review-fg: var(--color-warning-100);
+  --status-review-bg: var(--color-warning-05);
+  --status-signed-off-fg: var(--color-success-100);
+  --status-signed-off-bg: var(--color-success-05);
+  --status-assembling-fg: var(--color-info-100);
+  --status-assembling-bg: var(--color-info-05);
+
+  /* Shadows */
+  --shadow-xs: 0 2px 4px 1px rgb(0 44 66 / 8%);
+  --shadow-sm: 0 3.5px 8px 2px rgb(0 44 66 / 10%);
+  --shadow-md: 0 5px 12px 3px rgb(0 44 66 / 20%);
+}
