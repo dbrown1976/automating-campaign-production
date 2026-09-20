@@ -6,10 +6,6 @@ import {
   IconArrowUpRight,
   IconCheck,
   IconCopy,
-  IconDotsVertical,
-  IconInfoCircle,
-  IconLink,
-  IconAlertTriangle,
   IconX,
 } from '@tabler/icons-react'
 import {
@@ -43,31 +39,6 @@ function StatusBadge({ campaign }: { campaign: Campaign }) {
       {campaign.statusLabel}
     </span>
   )
-}
-
-type StatusAtomTone = 'success' | 'attention' | 'resolved'
-
-function StatusAtom({
-  children,
-  tone,
-}: {
-  children: React.ReactNode
-  tone: StatusAtomTone
-}) {
-  const Icon = tone === 'attention' ? IconAlertTriangle : tone === 'success' ? IconCheck : IconInfoCircle
-
-  return (
-    <span className={`status-atom status-atom-${tone}`}>
-      <Icon size={13} stroke={2} aria-hidden="true" />
-      <span>{children}</span>
-    </span>
-  )
-}
-
-function readinessTone(readiness: string): StatusAtomTone {
-  if (readiness.includes('required')) return 'attention'
-  if (readiness.includes('waived') || readiness === 'Unused') return 'resolved'
-  return 'success'
 }
 
 function ExternalLink({
@@ -158,8 +129,6 @@ function CampaignTable({
   onDuplicate: (campaign: Campaign) => void
   onArchive: (campaign: Campaign) => void
 }) {
-  const [openMenuId, setOpenMenuId] = useState<string | null>(null)
-
   return (
     <div className="table-frame">
       <table className="campaign-table">
@@ -211,37 +180,21 @@ function CampaignTable({
               </td>
               <td className="campaign-table-actions" onClick={stopRowSelection}>
                 {campaign.status === 'signed_off' ? (
-                  <div className="table-overflow-wrap">
+                  <div className="table-action-stack">
                     <button
-                      className="icon-button table-action-button"
-                      aria-label={`Actions for ${campaign.name}`}
-                      title="Campaign actions"
-                      aria-expanded={openMenuId === campaign.id}
-                      onClick={() => setOpenMenuId((current) => current === campaign.id ? null : campaign.id)}
+                      className="table-primary-action"
+                      onClick={() => onDuplicate(campaign)}
                     >
-                      <IconDotsVertical size={17} aria-hidden="true" />
+                      Duplicate
                     </button>
-                    {openMenuId === campaign.id && (
-                      <div className="table-action-menu" role="menu">
-                        <button role="menuitem" onClick={() => { setOpenMenuId(null); onDuplicate(campaign) }}>
-                          <IconCopy size={14} aria-hidden="true" /> Duplicate
-                        </button>
-                        <button role="menuitem" onClick={() => { setOpenMenuId(null); onArchive(campaign) }}>
-                          <IconArchive size={14} aria-hidden="true" /> Archive
-                        </button>
-                      </div>
-                    )}
+                    <button
+                      className="table-secondary-action"
+                      onClick={() => onArchive(campaign)}
+                    >
+                      Archive
+                    </button>
                   </div>
-                ) : (
-                  <button
-                    className="icon-button table-action-button"
-                    aria-label={`Archive ${campaign.name}`}
-                    title="Archive"
-                    onClick={() => onArchive(campaign)}
-                  >
-                    <IconArchive size={17} aria-hidden="true" />
-                  </button>
-                )}
+                ) : null}
               </td>
             </tr>
           ))}
@@ -382,7 +335,7 @@ function ActionRow({
         {item.subtitle && (
           <div className="attention-subtitle">{item.subtitle}</div>
         )}
-        <StatusAtom tone="attention">{item.reason}</StatusAtom>
+        <div className="attention-reason">{item.reason}</div>
         {item.reviewComment && (
           <div className="review-comment">
             Review comment: {item.reviewComment}
@@ -589,12 +542,7 @@ function Manifest({ campaign }: { campaign: Campaign }) {
               <span>{content.contentType}</span>
               <span>{content.workflowLabel}</span>
               {content.assignee && <span>{content.assignee}</span>}
-              {content.deliveryKey && (
-                <span className="delivery-key" aria-label="Delivery key">
-                  <IconLink size={13} stroke={1.7} aria-hidden="true" />
-                  <code>{content.deliveryKey}</code>
-                </span>
-              )}
+              {content.deliveryKey && <span>{content.deliveryKey}</span>}
             </div>
             <ExternalLink href={content.cmsUrl}>Open in CMS</ExternalLink>
           </div>
@@ -615,19 +563,25 @@ function Manifest({ campaign }: { campaign: Campaign }) {
               <div className="manifest-stack">
                 <strong>{asset.filename}</strong>
                 <span>{asset.kind === 'image' ? 'Image' : 'Video'}</span>
-                {asset.relationship === 'unused' ? (
-                  <StatusAtom tone="resolved">Unused</StatusAtom>
-                ) : asset.relationship === 'unlinked' ? (
-                  <StatusAtom tone="attention">Unlinked</StatusAtom>
-                ) : (
-                  <span>
-                    {linkedFrom ? `Linked from ${linkedFrom}` : 'Linked'}
-                  </span>
-                )}
+                <span>
+                  {asset.relationship === 'unused'
+                    ? 'Unused'
+                    : asset.relationship === 'unlinked'
+                      ? 'Unlinked'
+                      : linkedFrom
+                        ? `Linked from ${linkedFrom}`
+                        : 'Linked'}
+                </span>
                 {readiness && (
-                  <StatusAtom tone={readinessTone(readiness)}>
+                  <span
+                    className={
+                      readiness.includes('required')
+                        ? 'asset-status-warning'
+                        : 'asset-status-ok'
+                    }
+                  >
                     {readiness}
-                  </StatusAtom>
+                  </span>
                 )}
               </div>
 
@@ -767,7 +721,7 @@ function ArchiveModal({
       >
         <div className="modal-header">
           <div>
-            <p className="eyebrow">Campaign action</p>
+            <p className="eyebrow">Signed off campaign</p>
             <h3 id="archive-title">Archive {campaign.name}?</h3>
           </div>
           <button
@@ -804,7 +758,7 @@ function DuplicateModal({
 }: {
   campaign: Campaign
   onCancel: () => void
-  onConfirm: (options: { duplicateAssets: boolean; cmsFolderName: string; cmsLocation: string; damFolderName: string; damLocation: string; campaignName: string }) => void
+  onConfirm: () => void
 }) {
   const [campaignName, setCampaignName] = useState(`${campaign.name} copy`)
   const [cmsFolderName, setCmsFolderName] = useState(campaign.name)
@@ -906,8 +860,8 @@ function DuplicateModal({
           </button>
           <button
             className="primary-action-btn"
-            disabled={!campaignName.trim() || !cmsFolderName.trim() || !cmsLocation.trim() || (duplicateAssets && (!damFolderName.trim() || !damLocation.trim()))}
-            onClick={() => onConfirm({ duplicateAssets, cmsFolderName, cmsLocation, damFolderName, damLocation, campaignName })}
+            disabled={!campaignName.trim() || !cmsFolderName.trim()}
+            onClick={onConfirm}
           >
             Duplicate
           </button>
@@ -1081,7 +1035,6 @@ export default function CampaignProduction() {
   const [duplicateCampaign, setDuplicateCampaign] = useState<Campaign | null>(
     null,
   )
-  const [successMessage, setSuccessMessage] = useState<string | null>(null)
 
   const visibleCampaigns = campaigns.filter(
     (campaign) => campaign.status !== 'archived',
@@ -1204,45 +1157,9 @@ export default function CampaignProduction() {
       ...current,
       status: 'archived',
       statusLabel: 'Archived',
-      attention: [],
     }))
     setArchiveCampaign(null)
     if (selectedId === campaign.id) setSelectedId(null)
-    setSuccessMessage(`${campaign.name} archived.`)
-    window.setTimeout(() => setSuccessMessage(null), 3500)
-  }
-
-  const duplicate = (campaign: Campaign, options: { duplicateAssets: boolean; cmsFolderName: string; cmsLocation: string; damFolderName: string; damLocation: string; campaignName: string }) => {
-    const duplicateId = `${campaign.id}-copy-${Date.now()}`
-    const duplicateName = options.campaignName.trim()
-    const contentIdMap = new Map(campaign.content.map((item) => [item.id, `${item.id}-copy-${Date.now()}`]))
-    const assetIdMap = new Map(campaign.assets.map((item) => [item.id, `${item.id}-copy-${Date.now()}`]))
-    const duplicated: Campaign = {
-      ...structuredClone(campaign),
-      id: duplicateId,
-      name: duplicateName,
-      status: 'assembling',
-      statusLabel: 'Assembling',
-      cmsFolder: { ...campaign.cmsFolder, name: options.cmsFolderName.trim(), path: `${options.cmsLocation.trim()} / ${options.cmsFolderName.trim()}` },
-      damFolder: { ...campaign.damFolder, name: options.duplicateAssets ? options.damFolderName.trim() : campaign.damFolder.name, path: options.duplicateAssets ? `${options.damLocation.trim()} / ${options.damFolderName.trim()}` : campaign.damFolder.path },
-      content: campaign.content.map((item) => ({
-        ...item,
-        id: contentIdMap.get(item.id) || item.id,
-        childIds: item.childIds.map((id) => contentIdMap.get(id) || id),
-        assetIds: item.assetIds.map((id) => options.duplicateAssets ? (assetIdMap.get(id) || id) : id),
-      })),
-      assets: options.duplicateAssets ? campaign.assets.map((asset) => ({
-        ...asset,
-        id: assetIdMap.get(asset.id) || asset.id,
-        linkedFrom: asset.linkedFrom.map((link) => ({ ...link, contentId: contentIdMap.get(link.contentId) || link.contentId })),
-      })) : campaign.assets,
-      attention: [],
-      review: undefined,
-    }
-    setCampaigns((current) => [...current, duplicated])
-    setDuplicateCampaign(null)
-    setSuccessMessage(`${duplicateName} duplicated.`)
-    window.setTimeout(() => setSuccessMessage(null), 3500)
   }
 
   const reset = () => {
@@ -1252,7 +1169,6 @@ export default function CampaignProduction() {
     setResolvingIds(new Set())
     setArchiveCampaign(null)
     setDuplicateCampaign(null)
-    setSuccessMessage(null)
   }
 
   return (
@@ -1343,13 +1259,6 @@ export default function CampaignProduction() {
         )}
       </div>
 
-      {successMessage && (
-        <div className="success-message" role="status">
-          <IconCheck size={15} aria-hidden="true" />
-          <span>{successMessage}</span>
-        </div>
-      )}
-
       {archiveCampaign && (
         <ArchiveModal
           campaign={archiveCampaign}
@@ -1362,7 +1271,7 @@ export default function CampaignProduction() {
         <DuplicateModal
           campaign={duplicateCampaign}
           onCancel={() => setDuplicateCampaign(null)}
-          onConfirm={(options) => duplicate(duplicateCampaign, options)}
+          onConfirm={() => setDuplicateCampaign(null)}
         />
       )}
     </main>
