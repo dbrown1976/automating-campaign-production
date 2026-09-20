@@ -6,6 +6,9 @@ import {
   IconArrowUpRight,
   IconCheck,
   IconCopy,
+  IconInfoCircle,
+  IconLink,
+  IconAlertTriangle,
   IconX,
 } from '@tabler/icons-react'
 import {
@@ -50,7 +53,14 @@ function StatusAtom({
   children: React.ReactNode
   tone: StatusAtomTone
 }) {
-  return <span className={`status-atom status-atom-${tone}`}>{children}</span>
+  const Icon = tone === 'attention' ? IconAlertTriangle : tone === 'success' ? IconCheck : IconInfoCircle
+
+  return (
+    <span className={`status-atom status-atom-${tone}`}>
+      <Icon size={13} stroke={2} aria-hidden="true" />
+      <span>{children}</span>
+    </span>
+  )
 }
 
 function readinessTone(readiness: string): StatusAtomTone {
@@ -560,7 +570,12 @@ function Manifest({ campaign }: { campaign: Campaign }) {
               <span>{content.contentType}</span>
               <span>{content.workflowLabel}</span>
               {content.assignee && <span>{content.assignee}</span>}
-              {content.deliveryKey && <span>{content.deliveryKey}</span>}
+              {content.deliveryKey && (
+                <span className="delivery-key" aria-label="Delivery key">
+                  <IconLink size={13} stroke={1.7} aria-hidden="true" />
+                  <code>{content.deliveryKey}</code>
+                </span>
+              )}
             </div>
             <ExternalLink href={content.cmsUrl}>Open in CMS</ExternalLink>
           </div>

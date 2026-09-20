@@ -321,19 +321,20 @@ h3 {
   background: var(--surface-muted);
 }
 
-.status-atom {
+  .status-atom {
   display: inline-flex;
   align-items: center;
   align-self: flex-start;
+  gap: 5px;
   width: fit-content;
-  min-height: 20px;
-  padding: 1px 6px;
-  border: 1px solid currentColor;
+  min-height: 22px;
+  padding: 3px 8px;
   border-radius: 3px;
   font-size: 11px;
-  line-height: 16px;
+  font-weight: 600;
+  line-height: 1.2;
   white-space: nowrap;
-}
+  }
 
 .status-atom-attention {
   color: var(--status-attention-fg);
@@ -690,12 +691,24 @@ h3 {
   overflow-wrap: anywhere;
 }
 
-.manifest-stack span {
+  .manifest-stack span {
   color: var(--text-secondary);
   font-size: 12px;
-}
-
-.manifest-stack .asset-status-warning {
+  }
+  
+  .delivery-key {
+  display: inline-flex;
+  align-items: center;
+  gap: 5px;
+  }
+  
+  .delivery-key code {
+  color: var(--text-secondary);
+  font-family: var(--font-mono, ui-monospace, SFMono-Regular, Menlo, monospace);
+  font-size: 11px;
+  }
+  
+  .manifest-stack .asset-status-warning {
   color: var(--status-attention-fg);
 }
 
