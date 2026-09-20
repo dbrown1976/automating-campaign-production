@@ -238,55 +238,10 @@ h3 {
   color: var(--text-secondary);
 }
 
-  .campaign-table-actions {
-  width: 72px;
-  text-align: right;
-  }
+.campaign-table-actions {
+  width: 110px;
+}
 
-  .table-overflow-wrap {
-  position: relative;
-  display: inline-flex;
-  }
-
-  .table-action-button {
-  width: 30px;
-  height: 30px;
-  }
-
-  .table-action-menu {
-  position: absolute;
-  top: calc(100% + 4px);
-  right: 0;
-  z-index: 5;
-  min-width: 150px;
-  padding: 4px;
-  border: 1px solid var(--border-default);
-  background: var(--surface-default);
-  box-shadow: var(--shadow-sm);
-  }
-
-  .table-action-menu button {
-  display: flex;
-  align-items: center;
-  gap: 8px;
-  width: 100%;
-  padding: 8px 10px;
-  border: 0;
-  background: transparent;
-  color: var(--text-primary);
-  font: inherit;
-  text-align: left;
-  cursor: pointer;
-  }
-
-  .table-action-menu button:hover,
-  .table-action-menu button:focus-visible {
-  background: var(--surface-muted);
-  }
-
-  .table-primary-action {
-  padding: 4px 8px;
-  
 .table-action-stack {
   display: flex;
   flex-direction: column;
@@ -362,36 +317,6 @@ h3 {
 }
 
 .status-archived {
-  color: var(--text-secondary);
-  background: var(--surface-muted);
-}
-
-  .status-atom {
-  display: inline-flex;
-  align-items: center;
-  align-self: flex-start;
-  gap: 5px;
-  width: fit-content;
-  min-height: 22px;
-  padding: 3px 8px;
-  border-radius: 3px;
-  font-size: 11px;
-  font-weight: 600;
-  line-height: 1.2;
-  white-space: nowrap;
-  }
-
-.status-atom-attention {
-  color: var(--status-attention-fg);
-  background: var(--status-attention-bg);
-}
-
-.status-atom-success {
-  color: var(--status-signed-off-fg);
-  background: var(--status-signed-off-bg);
-}
-
-.status-atom-resolved {
   color: var(--text-secondary);
   background: var(--surface-muted);
 }
@@ -736,24 +661,12 @@ h3 {
   overflow-wrap: anywhere;
 }
 
-  .manifest-stack span {
+.manifest-stack span {
   color: var(--text-secondary);
   font-size: 12px;
-  }
-  
-  .delivery-key {
-  display: inline-flex;
-  align-items: center;
-  gap: 5px;
-  }
-  
-  .delivery-key code {
-  color: var(--text-secondary);
-  font-family: var(--font-mono, ui-monospace, SFMono-Regular, Menlo, monospace);
-  font-size: 11px;
-  }
-  
-  .manifest-stack .asset-status-warning {
+}
+
+.manifest-stack .asset-status-warning {
   color: var(--status-attention-fg);
 }
 
@@ -797,23 +710,7 @@ h3 {
   gap: 10px;
 }
 
-  .success-message {
-  position: fixed;
-  right: 24px;
-  bottom: 24px;
-  z-index: 30;
-  display: flex;
-  align-items: center;
-  gap: 8px;
-  padding: 10px 14px;
-  border: 1px solid var(--color-success-100);
-  background: var(--color-success-05);
-  color: #39790c;
-  box-shadow: var(--shadow-sm);
-  font-size: 13px;
-  }
-
-  .modal-backdrop {
+.modal-backdrop {
   position: fixed;
   inset: 0;
   z-index: 20;
