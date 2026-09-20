@@ -321,6 +321,35 @@ h3 {
   background: var(--surface-muted);
 }
 
+.status-atom {
+  display: inline-flex;
+  align-items: center;
+  align-self: flex-start;
+  width: fit-content;
+  min-height: 20px;
+  padding: 1px 6px;
+  border: 1px solid currentColor;
+  border-radius: 3px;
+  font-size: 11px;
+  line-height: 16px;
+  white-space: nowrap;
+}
+
+.status-atom-attention {
+  color: var(--status-attention-fg);
+  background: var(--status-attention-bg);
+}
+
+.status-atom-success {
+  color: var(--status-signed-off-fg);
+  background: var(--status-signed-off-bg);
+}
+
+.status-atom-resolved {
+  color: var(--text-secondary);
+  background: var(--surface-muted);
+}
+
 .split-view {
   display: grid;
   grid-template-columns: minmax(250px, 33%) minmax(0, 1fr);

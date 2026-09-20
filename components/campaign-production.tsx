@@ -41,6 +41,24 @@ function StatusBadge({ campaign }: { campaign: Campaign }) {
   )
 }
 
+type StatusAtomTone = 'success' | 'attention' | 'resolved'
+
+function StatusAtom({
+  children,
+  tone,
+}: {
+  children: React.ReactNode
+  tone: StatusAtomTone
+}) {
+  return <span className={`status-atom status-atom-${tone}`}>{children}</span>
+}
+
+function readinessTone(readiness: string): StatusAtomTone {
+  if (readiness.includes('required')) return 'attention'
+  if (readiness.includes('waived') || readiness === 'Unused') return 'resolved'
+  return 'success'
+}
+
 function ExternalLink({
   href,
   children,
@@ -335,7 +353,7 @@ function ActionRow({
         {item.subtitle && (
           <div className="attention-subtitle">{item.subtitle}</div>
         )}
-        <div className="attention-reason">{item.reason}</div>
+        <StatusAtom tone="attention">{item.reason}</StatusAtom>
         {item.reviewComment && (
           <div className="review-comment">
             Review comment: {item.reviewComment}
@@ -563,25 +581,19 @@ function Manifest({ campaign }: { campaign: Campaign }) {
               <div className="manifest-stack">
                 <strong>{asset.filename}</strong>
                 <span>{asset.kind === 'image' ? 'Image' : 'Video'}</span>
-                <span>
-                  {asset.relationship === 'unused'
-                    ? 'Unused'
-                    : asset.relationship === 'unlinked'
-                      ? 'Unlinked'
-                      : linkedFrom
-                        ? `Linked from ${linkedFrom}`
-                        : 'Linked'}
-                </span>
-                {readiness && (
-                  <span
-                    className={
-                      readiness.includes('required')
-                        ? 'asset-status-warning'
-                        : 'asset-status-ok'
-                    }
-                  >
-                    {readiness}
+                {asset.relationship === 'unused' ? (
+                  <StatusAtom tone="resolved">Unused</StatusAtom>
+                ) : asset.relationship === 'unlinked' ? (
+                  <StatusAtom tone="attention">Unlinked</StatusAtom>
+                ) : (
+                  <span>
+                    {linkedFrom ? `Linked from ${linkedFrom}` : 'Linked'}
                   </span>
+                )}
+                {readiness && (
+                  <StatusAtom tone={readinessTone(readiness)}>
+                    {readiness}
+                  </StatusAtom>
                 )}
               </div>
 
